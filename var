@@ -1,0 +1,112 @@
+// Problem 1: Sum of Distinct Elements from Two Sets
+
+Algorithm sum_distinct_elements
+Input: set1[ ], set2[ ]  // arrays of integers
+Output: sum  // integer
+
+BEGIN
+    sum := 0
+    
+    // Add elements from set1 that are NOT in set2
+    FOR i FROM 0 TO length(set1)-1 DO
+        found := false
+        FOR j FROM 0 TO length(set2)-1 DO
+            IF set1[i] == set2[j] THEN
+                found := true
+                BREAK
+            END_IF
+        END_FOR
+        IF NOT found THEN
+            sum := sum + set1[i]
+        END_IF
+    END_FOR
+    
+    // Add elements from set2 that are NOT in set1
+    FOR i FROM 0 TO length(set2)-1 DO
+        found := false
+        FOR j FROM 0 TO length(set1)-1 DO
+            IF set2[i] == set1[j] THEN
+                found := true
+                BREAK
+            END_IF
+        END_FOR
+        IF NOT found THEN
+            sum := sum + set2[i]
+        END_IF
+    END_FOR
+    
+    RETURN sum
+END
+
+
+// Problem 2: Dot Product and Orthogonality Check
+
+// Procedure version of dot product (ps passed by reference)
+Procedure dot_product(v1[ ], v2[ ], n, VAR ps)
+Input: v1, v2: arrays of real numbers
+       n: integer
+Output: ps: real (dot product result)
+
+BEGIN
+    ps := 0
+    FOR i FROM 0 TO n-1 DO
+        ps := ps + v1[i] * v2[i]
+    END_FOR
+END
+
+
+Algorithm check_orthogonal_pairs
+Input: vectors1[ ][ ], vectors2[ ][ ], p, n
+Output: Print whether each pair is orthogonal
+
+VAR
+    i: integer
+    product: real
+
+BEGIN
+    FOR i FROM 0 TO p-1 DO
+        CALL dot_product(vectors1[i], vectors2[i], n, product)
+        IF product == 0 THEN
+            Print("Pair ", i+1, " are orthogonal")
+        ELSE
+            Print("Pair ", i+1, " are NOT orthogonal")
+        END_IF
+    END_FOR
+END
+
+
+// Function version of dot product (returns value)
+Function dot_product(v1[ ], v2[ ], n): real
+Input: v1, v2: arrays of real numbers, n: integer
+Output: dot product value (real)
+
+VAR
+    sum: real
+    i: integer
+
+BEGIN
+    sum := 0
+    FOR i FROM 0 TO n-1 DO
+        sum := sum + v1[i] * v2[i]
+    END_FOR
+    RETURN sum
+END
+
+
+Algorithm check_orthogonal_pairs_function
+Input: vectors1[ ][ ], vectors2[ ][ ], p, n
+
+VAR
+    i: integer
+    product: real
+
+BEGIN
+    FOR i FROM 0 TO p-1 DO
+        product := dot_product(vectors1[i], vectors2[i], n)
+        IF product == 0 THEN
+            Print("Pair ", i+1, " are orthogonal")
+        ELSE
+            Print("Pair ", i+1, " are NOT orthogonal")
+        END_IF
+    END_FOR
+END
